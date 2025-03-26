@@ -1,0 +1,11 @@
+# Temporary files
+*~
+~$*.doc*
+~$*.xls*
+*.xlk
+~$*.ppt*
+
+# Prevent mac users to commit .DS_Store files, and other Mac temp files
+.*~
+~*
+*.DS_Store
