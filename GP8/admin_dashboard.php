@@ -33,7 +33,7 @@ $appointments_result = $conn->query($sql);
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
             font-family: 'Segoe UI', Arial, sans-serif; 
-            background-color: #fff; /* White, matching index.php */
+            background-color: #fff; 
             color: #333; 
             line-height: 1.6; 
             min-height: 100vh; 
@@ -41,13 +41,12 @@ $appointments_result = $conn->query($sql);
             flex-direction: column; 
         }
         header { 
-            background: #3498db; /* Sky blue, matching index.php */
+            background: #3498db; 
             color: #fff; 
-            padding: 1rem 2rem; 
+            padding: 10px 20px; 
             display: flex; 
             align-items: center; 
             justify-content: space-between; 
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
         }
         .logo-container { 
             display: flex; 
@@ -55,12 +54,31 @@ $appointments_result = $conn->query($sql);
             gap: 15px; 
         }
         .logo, .health-logo { 
-            width: 90px; 
+            width: 100px; 
             height: auto; 
             transition: transform 0.3s ease; 
         }
         .logo:hover, .health-logo:hover { 
             transform: scale(1.05); 
+        }
+        .nav-links { 
+            display: flex; 
+            gap: 10px; 
+        }
+        .nav-links a { 
+            color: #fff; 
+            text-decoration: none; 
+            padding: 8px 12px; 
+            font-size: 16px; 
+            border-radius: 4px; 
+            transition: background 0.3s ease; 
+        }
+        .nav-links a:hover { 
+            background: rgba(255, 255, 255, 0.1); 
+        }
+        .nav-links a.active { 
+            background: rgba(255, 255, 255, 0.2); 
+            font-weight: bold; 
         }
         .welcome-message { 
             font-size: 1.4rem; 
@@ -68,7 +86,7 @@ $appointments_result = $conn->query($sql);
             letter-spacing: 0.5px; 
         }
         .logout-btn { 
-            background: #e74c3c; /* Red for contrast */
+            background: #e74c3c; 
             color: #fff; 
             padding: 8px 16px; 
             border: none; 
@@ -89,7 +107,7 @@ $appointments_result = $conn->query($sql);
             justify-content: center; 
         }
         .dashboard-container { 
-            background: #f9f9f9; /* Off-white, like index.php containers */
+            background: #f9f9f9; 
             padding: 2rem; 
             border-radius: 10px; 
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
@@ -102,7 +120,7 @@ $appointments_result = $conn->query($sql);
             to { opacity: 1; transform: translateY(0); } 
         }
         h3 { 
-            color: #3498db; /* Sky blue, matching index.php */
+            color: #3498db; 
             text-align: center; 
             margin-bottom: 1.5rem; 
             font-size: 1.7rem; 
@@ -136,7 +154,7 @@ $appointments_result = $conn->query($sql);
             display: block; 
         }
         ul li a:hover { 
-            color: #2980b9; /* Darker sky blue for hover */
+            color: #2980b9; 
         }
         .notification-circle { 
             position: absolute; 
@@ -159,7 +177,7 @@ $appointments_result = $conn->query($sql);
             top: 20px; 
             left: 50%; 
             transform: translateX(-50%); 
-            background: #3498db; /* Sky blue for consistency */
+            background: #3498db; 
             color: #fff; 
             padding: 1rem 2rem; 
             border-radius: 8px; 
@@ -192,7 +210,7 @@ $appointments_result = $conn->query($sql);
             border-bottom: 1px solid #e0e0e0; 
         }
         th { 
-            background: #3498db; /* Sky blue, matching index.php */
+            background: #3498db; 
             color: #fff; 
             font-weight: 600; 
             font-size: 0.95rem; 
@@ -201,7 +219,7 @@ $appointments_result = $conn->query($sql);
             background: #fff; 
         }
         tr:hover td { 
-            background: #e6f3fa; /* Light blue tint for hover */
+            background: #e6f3fa; 
         }
         .btn-edit { 
             padding: 6px 12px; 
@@ -239,7 +257,7 @@ $appointments_result = $conn->query($sql);
             font-size: 1rem; 
         }
         footer { 
-            background: #f5f5f5; /* Light gray, avoiding dark colors */
+            background: #f5f5f5; 
             color: #555; 
             text-align: center; 
             padding: 1rem; 
@@ -263,6 +281,11 @@ $appointments_result = $conn->query($sql);
             header { 
                 flex-direction: column; 
                 gap: 1rem; 
+            }
+            .nav-links { 
+                flex-direction: column; 
+                align-items: center; 
+                gap: 5px; 
             }
             .welcome-message { 
                 font-size: 1.2rem; 
@@ -297,8 +320,15 @@ $appointments_result = $conn->query($sql);
             <a href="index.php"><img src="images/new_logo.jpeg" alt="Hospital Logo" class="logo"></a>
             <a href="index.php"><img src="images/health.jpeg" alt="NSW Health" class="health-logo"></a>
         </div>
-        <span class="welcome-message">Welcome, Admin</span>
-        <a href="logout.php" class="logout-btn">Logout</a>
+        <div class="nav-links">
+            <a href="index.php" class="active">Home</a>
+            <a href="about.php">About</a>
+            <a href="register.php">Register Patient</a>
+        </div>
+        <div class="right-menu">
+            <span class="welcome-message">Welcome, Admin</span>
+            <a href="logout.php" class="logout-btn">Logout</a>
+        </div>
     </header>
 
     <main>

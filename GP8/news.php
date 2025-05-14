@@ -187,9 +187,6 @@ if ($conn->connect_error) {
                 <li><a href="register.php">Register Patient</a></li>
                 <li><a href="appointment.php">Book Appointment</a></li>
                 <li><a href="bills.php">View Bills</a></li>
-                <li><a href="maternity.php">Maternity Ward</a></li>
-                <li><a href="emergency.php">Emergency Department</a></li>
-                <li><a href="childcare.php">Childcare Department</a></li>
                 <li><a href="news.php" class="active">News</a></li>
             </ul>
         </nav>

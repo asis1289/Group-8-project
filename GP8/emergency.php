@@ -17,21 +17,18 @@ if ($conn->connect_error) {
             margin: 0; 
             padding: 0; 
             line-height: 1.6; 
-            min-height: 100vh; 
             display: flex; 
             flex-direction: column; 
-            background-color: #f0f4f8;
-            color: #333;
+            min-height: 100vh; 
         }
         header { 
-            background: linear-gradient(90deg, #2c3e50, #3498db); 
+            background-color: #3498db; 
             color: #fff; 
             padding: 1em 0; 
             display: flex; 
             align-items: center; 
             justify-content: space-between; 
             padding: 10px 20px; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         .logo-container { 
             display: flex; 
@@ -50,7 +47,7 @@ if ($conn->connect_error) {
             list-style-type: none; 
             margin: 0; 
             padding: 0; 
-            background-color: #34495e; 
+            background-color: #f4f4f4; 
             overflow: hidden; 
             display: flex; 
         }
@@ -59,18 +56,16 @@ if ($conn->connect_error) {
         }
         nav li a { 
             display: block; 
-            color: white; 
+            color: #333; 
             text-align: center; 
             padding: 14px 16px; 
             text-decoration: none; 
-            font-weight: 500;
-            transition: background-color 0.3s;
         }
         nav li a:hover { 
-            background-color: #2980b9; 
+            background-color: #ddd; 
         }
         nav li a.active { 
-            background-color: #2980b9; 
+            background-color: #ddd; 
             font-weight: bold; 
         }
         main { 
@@ -90,29 +85,28 @@ if ($conn->connect_error) {
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         footer { 
-            background-color: #2c3e50; 
+            background-color: #333; 
             color: #fff; 
             text-align: center; 
             padding: 1em 0; 
-            position: relative; 
             width: 100%; 
         }
         h2 {
-            color: #2c3e50;
-            margin-bottom: 1rem;
+            margin: 10px 0;
+            color: #3498db;
         }
         p {
             font-size: 1.1rem;
             line-height: 1.8;
-            color: #555;
+            color: #666;
             margin-bottom: 1rem;
         }
         .contact-details {
             font-size: 1rem;
-            color: #333;
+            color: #666;
         }
         .contact-details strong {
-            color: #e74c3c; /* Red for emphasis */
+            color: #3498db;
         }
         .dropdown { 
             position: relative; 
@@ -181,7 +175,6 @@ if ($conn->connect_error) {
                 <li><a href="register.php">Register Patient</a></li>
                 <li><a href="appointment.php">Book Appointment</a></li>
                 <li><a href="bills.php">View Bills</a></li>
-                <li><a href="maternity.php">Maternity Ward</a></li>
                 <li><a href="emergency.php" class="active">Emergency Department</a></li>
             </ul>
         </nav>

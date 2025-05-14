@@ -82,7 +82,12 @@ if ($conn->connect_error) {
             width: 100%; 
         }
 
-        /* Dropdown Styles */
+        /* Dropdown and Register Button Styles */
+        .right-menu { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
         .dropdown { 
             position: relative; 
             display: inline-block; 
@@ -127,30 +132,42 @@ if ($conn->connect_error) {
         .signup-link:hover { 
             text-decoration: underline; 
         }
-        .right-menu { 
-            display: flex; 
-            align-items: center; 
+        .register-btn {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .register-btn:hover {
+            background-color: #34495e;
         }
 
         /* Services Section */
         .services { 
-            display: flex; 
-            flex-wrap: wrap; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
             gap: 20px; 
-            justify-content: center; 
+            justify-items: center; 
             margin-top: 20px; 
         }
         .service-card { 
             background-color: #f9f9f9; 
             border-radius: 8px; 
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
-            width: 250px; 
-            text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            min-height: 350px; 
             padding: 15px; 
-            transition: transform 0.2s; 
+            transition: transform 0.2s, box-shadow 0.2s; 
         }
         .service-card:hover { 
             transform: scale(1.05); 
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); 
         }
         .service-card img { 
             width: 100%; 
@@ -161,10 +178,14 @@ if ($conn->connect_error) {
         .service-card h3 { 
             margin: 10px 0; 
             color: #3498db; 
+            font-size: 1.2rem; 
         }
         .service-card p { 
             font-size: 14px; 
             color: #666; 
+            min-height: 60px; 
+            margin: 0 0 10px; 
+            flex-grow: 1; 
         }
         .service-card a { 
             display: inline-block; 
@@ -174,9 +195,44 @@ if ($conn->connect_error) {
             color: #fff; 
             text-decoration: none; 
             border-radius: 5px; 
+            align-self: center; 
         }
         .service-card a:hover { 
             background-color: #2980b9; 
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .services {
+                grid-template-columns: 1fr;
+            }
+            .service-card {
+                min-height: auto;
+            }
+            .right-menu {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .dropbtn, .register-btn {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+        @media (max-width: 480px) {
+            .logo-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .logo, .health-logo {
+                width: 80px;
+            }
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+            }
+            nav li {
+                float: none;
+            }
         }
     </style>
 </head>
@@ -186,7 +242,9 @@ if ($conn->connect_error) {
             <a href="index.php">
                 <img src="images/new_logo.jpeg" alt="Hospital Logo" class="logo">
             </a>
-            <img src="images/health.jpeg" alt="NSW Health" class="health-logo">
+            <a href="index.php">
+                <img src="images/health.jpeg" alt="NSW Health" class="health-logo">
+            </a>
         </div>
         <nav>
             <ul>
@@ -209,6 +267,7 @@ if ($conn->connect_error) {
                     <a href="signup.php" class="signup-link">Don't have an account? Sign up here</a>
                 </div>
             </div>
+            <a href="signup.php" class="register-btn">Register</a>
         </div>
     </header>
     
