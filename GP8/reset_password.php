@@ -1,37 +1,43 @@
 <?php
 session_start();
+
+// Database connection
 $conn = new mysqli("localhost", "root", "", "hms_db");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if (!isset($_GET["token"]) || !isset($_GET["id"])) {
-    die("Invalid reset link.");
-}
-
-$token = $_GET["token"];
-$id = $_GET["id"];
-
-$stmt = $conn->prepare("SELECT user_id FROM reset_tokens WHERE token = ? AND user_id = ? AND created_at > NOW() - INTERVAL 1 HOUR");
-$stmt->bind_param("si", $token, $id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows == 0) {
-    die("Invalid or expired reset link.");
-}
-
+// Handle form submission
+$message = "";
+$message_type = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_password = $_POST["new_password"];
-    $stmt = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
-    $stmt->bind_param("si", $new_password, $id);
-    if ($stmt->execute()) {
-        $conn->query("DELETE FROM reset_tokens WHERE token = '$token'"); // Remove used token
-        $message = "Password reset successfully! <a href='user_login.php'>Login here</a>";
+    $confirm_password = $_POST["confirm_password"];
+    $phoneno = isset($_SESSION['reset_phoneno']) ? $_SESSION['reset_phoneno'] : '';
+
+    if (empty($phoneno)) {
+        $message = "Session expired. Please try again.";
+        $message_type = "error";
+    } elseif ($new_password !== $confirm_password) {
+        $message = "Confirm password does not match.";
+        $message_type = "error";
     } else {
-        $message = "Error: " . $conn->error;
+        // Update password in users table
+        $stmt = $conn->prepare("UPDATE users u 
+                                JOIN patient p ON u.pid = p.pid 
+                                SET u.password = ? 
+                                WHERE p.phoneno = ?");
+        $stmt->bind_param("ss", $new_password, $phoneno);
+        if ($stmt->execute()) {
+            $message = "Password reset successfully!";
+            $message_type = "success";
+            unset($_SESSION['reset_phoneno']); // Clear session
+        } else {
+            $message = "Error updating password: " . $conn->error;
+            $message_type = "error";
+        }
+        $stmt->close();
     }
-    $stmt->close();
 }
 ?>
 
@@ -42,25 +48,104 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }
-        .container { max-width: 400px; margin: 0 auto; }
-        h2 { text-align: center; color: #3498db; }
-        input { width: 100%; padding: 8px; margin: 10px 0; }
-        button { background-color: #3498db; color: #fff; padding: 10px; border: none; width: 100%; cursor: pointer; }
-        p { text-align: center; color: green; }
-        .error { color: red; }
-        a { color: #3498db; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Arial', sans-serif; 
+            color: #333; 
+            line-height: 1.6; 
+        }
+        h2 { 
+            color: #1a237e; 
+            text-align: center; 
+            margin-bottom: 1.5rem; 
+            font-size: 1.8rem; 
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); 
+        }
+        form label { 
+            display: block; 
+            margin: 10px 0 5px; 
+            font-weight: 600; 
+            color: #1a237e; 
+        }
+        input { 
+            width: 100%; 
+            padding: 10px; 
+            margin-bottom: 15px; 
+            border: 2px solid #ddd; 
+            border-radius: 6px; 
+            font-size: 1rem; 
+            transition: border-color 0.3s; 
+        }
+        input:focus { 
+            border-color: #3f51b5; 
+            outline: none; 
+        }
+        button { 
+            width: 100%; 
+            background: linear-gradient(90deg, #3f51b5, #5c6bc0); 
+            color: #fff; 
+            padding: 12px; 
+            border: none; 
+            border-radius: 6px; 
+            font-size: 1.1rem; 
+            cursor: pointer; 
+            transition: background 0.3s, transform 0.2s; 
+        }
+        button:hover { 
+            background: linear-gradient(90deg, #5c6bc0, #3f51b5); 
+            transform: translateY(-2px); 
+        }
+        .message { 
+            text-align: center; 
+            margin: 15px 0; 
+            font-size: 1rem; 
+            padding: 10px; 
+            border-radius: 5px; 
+            animation: slideIn 0.5s ease-out; 
+        }
+        .message.success { 
+            background: #d4edda; 
+            color: #155724; 
+        }
+        .message.error { 
+            background: #f8d7da; 
+            color: #721c24; 
+        }
+        .message.success a { 
+            display: block; 
+            margin-top: 10px; 
+            color: #3f51b5; 
+            font-weight: 600; 
+            text-decoration: none; 
+            transition: color 0.3s, text-decoration 0.3s; 
+        }
+        .message.success a:hover { 
+            color: #5c6bc0; 
+            text-decoration: underline; 
+        }
+        @keyframes slideIn { 
+            from { opacity: 0; transform: translateY(-20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Reset Password</h2>
-        <form method="POST">
-            <input type="text" name="new_password" placeholder="Enter new password" required>
-            <button type="submit">Reset Password</button>
-        </form>
-        <?php if (isset($message)) echo "<p class='" . (strpos($message, 'Error') !== false ? 'error' : '') . "'>$message</p>"; ?>
-    </div>
+    <h2>Reset Password</h2>
+    <form method="POST" action="reset_password.php">
+        <label for="new_password">New Password</label>
+        <input type="password" id="new_password" name="new_password" placeholder="Enter new password" required>
+        <label for="confirm_password">Confirm New Password</label>
+        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password" required>
+        <button type="submit">Reset</button>
+    </form>
+    <?php if (!empty($message)) { ?>
+        <div class="message <?php echo $message_type; ?>">
+            <?php echo $message; ?>
+            <?php if ($message_type === 'success') { ?>
+                <a href="user_login.php" target="_parent">Go to Login</a>
+            <?php } ?>
+        </div>
+    <?php } ?>
 </body>
 </html>
 <?php $conn->close(); ?>

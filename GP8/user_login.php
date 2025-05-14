@@ -158,6 +158,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background: linear-gradient(90deg, #5c6bc0, #3f51b5); 
             transform: translateY(-2px); 
         }
+        .forgot-password, .signup-prompt { 
+            text-align: center; 
+            margin: 15px 0; 
+            font-size: 0.95rem; 
+            color: #333; 
+        }
+        .reset-btn, .signup-btn { 
+            background: linear-gradient(90deg, #3f51b5, #5c6bc0); 
+            color: #fff; 
+            padding: 8px 16px; 
+            border-radius: 6px; 
+            text-decoration: none; 
+            font-size: 0.95rem; 
+            transition: background 0.3s, transform 0.2s; 
+        }
+        .reset-btn:hover, .signup-btn:hover { 
+            background: linear-gradient(90deg, #5c6bc0, #3f51b5); 
+            transform: translateY(-2px); 
+        }
         .message { 
             text-align: center; 
             margin: 15px 0; 
@@ -277,6 +296,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
                 <button type="submit">Login Now</button>
+                <p class="forgot-password">Forgot Password? <a href="forgot_password.php" class="reset-btn">Reset Now</a></p>
+                <p class="signup-prompt">Don't have an account? <a href="signup.php" class="signup-btn">Register Now</a></p>
             </form>
             <?php if (!empty($message)) { ?>
                 <div class="message <?php echo strpos($message, 'Invalid') !== false ? 'error' : 'success'; ?>">

@@ -44,14 +44,12 @@ $conn->close();
             flex-direction: column; 
         }
         header { 
-            background: linear-gradient(90deg, #27ae60, #2ecc71); /* Green gradient */
+            background: #3498db; 
             color: #fff; 
-            padding: 1rem; 
+            padding: 10px 20px; 
             display: flex; 
             align-items: center; 
             justify-content: space-between; 
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
-            position: relative; 
         }
         .logo-container { 
             display: flex; 
@@ -66,27 +64,48 @@ $conn->close();
         .logo:hover, .health-logo:hover { 
             transform: scale(1.05); 
         }
-        .page-message { 
-            font-size: 1.5rem; 
-            font-weight: 600; 
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); 
+        .nav-links { 
+            display: flex; 
+            gap: 10px; 
         }
-        .welcome-text { 
-            font-size: 1.2rem; 
-            margin-left: 20px; 
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); 
+        .nav-links a { 
+            color: #fff; 
+            text-decoration: none; 
+            padding: 8px 12px; 
+            font-size: 16px; 
+            border-radius: 4px; 
+            transition: background 0.3s ease; 
+        }
+        .nav-links a:hover { 
+            background: rgba(255, 255, 255, 0.1); 
+        }
+        .nav-links a.active { 
+            background: rgba(255, 255, 255, 0.2); 
+            font-weight: bold; 
+        }
+        .right-menu { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        .welcome-message { 
+            font-size: 1.4rem; 
+            font-weight: 500; 
+            letter-spacing: 0.5px; 
         }
         .logout-btn { 
-            background: linear-gradient(90deg, #e74c3c, #c0392b); /* Red gradient for logout */
+            background: #e74c3c; 
             color: #fff; 
             padding: 8px 16px; 
+            border: none; 
             border-radius: 6px; 
             text-decoration: none; 
-            font-weight: 600; 
-            transition: background 0.3s, transform 0.2s; 
+            font-size: 0.9rem; 
+            font-weight: 500; 
+            transition: background 0.3s ease, transform 0.2s ease; 
         }
         .logout-btn:hover { 
-            background: linear-gradient(90deg, #c0392b, #e74c3c); 
+            background: #c0392b; 
             transform: translateY(-2px); 
         }
         main { 
@@ -148,18 +167,31 @@ $conn->close();
             box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2); 
         }
         @media (max-width: 768px) { 
-            .page-message { font-size: 1.2rem; } 
-            .welcome-text { font-size: 1rem; margin-left: 10px; } 
             .dashboard-container { padding: 1.5rem; } 
             h3 { font-size: 1.5rem; } 
             ul li a { padding: 10px 15px; font-size: 1rem; } 
         }
-        @media (max-width: 480px) { 
-            header { flex-direction: column; padding: 1rem 0; } 
-            .logo-container { margin-bottom: 1rem; } 
-            .page-message { font-size: 1rem; } 
-            .welcome-text { font-size: 0.9rem; margin-left: 0; } 
-            .logout-btn { padding: 6px 12px; font-size: 0.9rem; } 
+        @media (max-width: 600px) { 
+            header { 
+                flex-direction: column; 
+                gap: 1rem; 
+            }
+            .nav-links { 
+                flex-direction: column; 
+                align-items: center; 
+                gap: 5px; 
+            }
+            .right-menu { 
+                flex-direction: column; 
+                gap: 5px; 
+            }
+            .welcome-message { 
+                font-size: 1.2rem; 
+            }
+            .logout-btn { 
+                padding: 6px 12px; 
+                font-size: 0.9rem; 
+            }
             .dashboard-container { padding: 1rem; } 
             h3 { font-size: 1.2rem; } 
             ul li a { padding: 8px 12px; font-size: 0.9rem; } 
@@ -172,9 +204,15 @@ $conn->close();
             <a href="index.php"><img src="images/new_logo.jpeg" alt="Hospital Logo" class="logo"></a>
             <a href="index.php"><img src="images/health.jpeg" alt="NSW Health" class="health-logo"></a>
         </div>
-        <span class="page-message">Employee Dashboard - Hospital Management System</span>
-        <span class="welcome-text">Welcome, <?php echo $employeeName; ?></span>
-        <a href="logout.php" class="logout-btn">Logout</a>
+        <div class="nav-links">
+            <a href="index.php" class="active">Home</a>
+            <a href="about.php">About</a>
+            <a href="register.php">Register Patient</a>
+        </div>
+        <div class="right-menu">
+            <span class="welcome-message">Welcome, <?php echo $employeeName; ?></span>
+            <a href="logout.php" class="logout-btn">Logout</a>
+        </div>
     </header>
 
     <main>
