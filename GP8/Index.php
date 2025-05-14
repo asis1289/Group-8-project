@@ -186,7 +186,10 @@ if ($conn->connect_error) {
             <a href="index.php">
                 <img src="images/new_logo.jpeg" alt="Hospital Logo" class="logo">
             </a>
-            <img src="images/health.jpeg" alt="NSW Health" class="health-logo">
+            <a href="index.php">
+             <img src="images/health.jpeg" alt="NSW Health" class="health-logo">
+         </a>
+
         </div>
         <nav>
             <ul>
